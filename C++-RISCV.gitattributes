@@ -11,19 +11,19 @@
  """
 
  # Applying Necessary Programming Language Ignores for the current Repository
- # Current Repository: C-Kuzy/COP-3514
+ # Current Repository: C-Kuzy/CDA-3103
  "Files This Repository Wants to detect:"
-  *.c linguist-detectable=true
   *.c++ linguist-detectable=true
+  *.s linguist-detectable=true
 
  "Files This Repository is Restricing:"
   *.py linguist-detectable=false
   *.java linguist-detectable=false
+  *.c linguist-detectable=false
   *.html linguist-detectable=false
   *.css linguist-detectable=false
   *.js linguist-detectable=false
   *.m linguist-detectable=false
-  *.s linguist-detectable=false
   *.go linguist-detectable=false
   *.txt linguist-detectable=false
   *.rtf linguist-detectable=false
