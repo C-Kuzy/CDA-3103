@@ -1,6 +1,6 @@
 /*
  Author: C-Kuzy
- Description: Assignment #3 Points/Question Description
+ Description: Assignment #3 Points/Question Description... Currently being updated!
 
  Part #1. Complete the following 12 Questions
     
