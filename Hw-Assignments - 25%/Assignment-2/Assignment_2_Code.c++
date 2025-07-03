@@ -531,48 +531,6 @@ void signed_decimal_to_binary(string name, int format, unsigned int len)
 				continue;
 			}
 		}
-		//std::cin >> converted_input;
-		//std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-		//converted_rep = Repeat_Division(abs(rand_val), 2);
-		//while (converted_rep.length() < len)
-		//{
-		//	converted_rep = '0' + converted_rep;
-		//}
-		//
-		//switch (format)
-		//{
-		//case 1:			// Sign-magnitued
-		//	if (rand_val < 0)
-		//		converted_rep[0] = '1';
-		//	break;
-		//case 2:			// 1's complement
-		//	if (rand_val < 0)
-		//	{
-		//		for (int i = 0; i < len; i++)
-		//			if (converted_rep[i] == '0')
-		//				converted_rep[i] = '1';
-		//			else
-		//				converted_rep[i] = '0';
-		//	}
-		//	break;
-		//case 3:			// 2's complement
-		//	if (rand_val < 0)
-		//	{
-		//		int i;
-		//		for (i = len - 1; i >= 0; i--)
-		//		{
-		//			if (converted_rep[i] == '1')
-		//				break;
-		//		}
-		//		i--;
-		//		for (; i >= 0; i--)
-		//			if (converted_rep[i] == '0')
-		//				converted_rep[i] = '1';
-		//			else
-		//				converted_rep[i] = '0';
-		//	}
-		//}
 
 		if (converted_rep.compare(converted_input) == 0)
 		{
@@ -681,33 +639,6 @@ void signed_binary_to_decimal(string name, int format, unsigned int len)
 				continue;
 			}
 		}
-		//std::cin >> decimal_input;
-		//std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-		//for (int i = len - 1; i >= 0; i--)
-		//{
-		//	if (isdigit(rand_pattern[i]))
-		//		decimal_rep += (rand_pattern[i] - '0') * weight;
-		//	else
-		//		decimal_rep += (rand_pattern[i] - 'A' + 10) * weight;
-		//	weight = weight * 2;
-		//}
-
-		//if (rand_pattern[0] == '1')
-		//{
-		//	switch (format)
-		//	{
-		//	case 1:			// Sign-magnitued
-		//		decimal_rep = -(decimal_rep - weight / 2);
-		//		break;
-		//	case 2:			// 1's complement
-		//		decimal_rep = decimal_rep - weight + 1;
-		//		break;
-		//	case 3:			// 2's complement
-		//		decimal_rep = decimal_rep - weight;
-		//		break;
-		//	}
-		//}
 
 		if (decimal_rep == decimal_input)
 		{
@@ -873,8 +804,6 @@ void addition_1_complement(string datax, string datay, unsigned int length)
 		second_y += '1';
 	}
 	//	bool overflow = binary_addition(sum, second_y, second_sum, second_carry, 8);
-
-
 
 	if (overflow)
 		std::cout << "Overflow occurs!" << endl << endl;
