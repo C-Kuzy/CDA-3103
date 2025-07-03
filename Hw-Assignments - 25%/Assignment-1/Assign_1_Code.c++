@@ -5,8 +5,8 @@
    12. convert unsigned binary numbers to decimal numbers
    13. convert unsigned decimal numbers to octal numbers
    14. convert unsigned octal numbers to decimal numbers
-   15. convert unsigned decimal numbers to hexadecimal numbers
-   16. convert unsigned hexadecimal numbers to decimal numbers
+   15. convert unsigned decimal numbers to hexdecimal numbers
+   16. convert unsigned hexdecimal numbers to decimal numbers
    17. convert signed decimal numbers to sign-magnitude binary numbers
    18. convert signed decimal numbers to 1's complementary binary numbers
    19. convert signed decimal numbers to 2's complementary binary numbers
@@ -70,31 +70,31 @@ int main()
 	{
 		if (tolower(choice) == 'y')
 			std::cout << "Practice Menu\n\n"
-			<< "11. convert unsigned decimal numbers to binary numbers (8 bits)" << endl
-			<< "12. convert unsigned binary numbers to decimal numbers" << endl
-			<< "13. convert unsigned decimal numbers to octal numbers" << endl
-			<< "14. convert unsigned octal numbers to decimal numbers" << endl
-			<< "15. convert unsigned decimal numbers to hexadecimal numbers" << endl
-			<< "16. convert unsigned hexadecimal numbers to decimal numbers" << endl
-			<< "17. convert signed decimal numbers to sign - magnitude binary numbers" << endl
-			<< "18. convert signed decimal numbers to 1's complementary binary numbers" << endl
-			<< "19. convert signed decimal numbers to 2's complementary binary numbers" << endl
-			<< "20. convert sign - magnitude binary numbers to decimal numbers" << endl
-			<< "21. convert 1's complementary binary numbers to decimal numbers" << endl
+			<< "11. Convert unsigned decimal numbers to binary numbers (8 bits)" << endl
+			<< "12. Convert unsigned binary numbers to decimal numbers" << endl
+			<< "13. Convert unsigned decimal numbers to octal numbers" << endl
+			<< "14. Convert unsigned octal numbers to decimal numbers" << endl
+			<< "15. Convert unsigned decimal numbers to hexdecimal numbers" << endl
+			<< "16. Convert unsigned hexdecimal numbers to decimal numbers" << endl
+			<< "17. Convert signed decimal numbers to sign - magnitude binary numbers" << endl
+			<< "18. Convert signed decimal numbers to 1's complementary binary numbers" << endl
+			<< "19. Convert signed decimal numbers to 2's complementary binary numbers" << endl
+			<< "20. Convert sign - magnitude binary numbers to decimal numbers" << endl
+			<< "21. Convert 1's complementary binary numbers to decimal numbers" << endl
 			<< "22. Convert 2's complementary binary numbers to decimal numbers" << endl
 			<< "23. 1's complement arithmetic operation" << endl
 			<< "24. 2's complement arithmetic operation" << endl << endl;
 
 		if (name.length() == 0)
 		{
-			std::cout << "State Your 'First' + 'Last' Name: ";
+			std::cout << "State Your Full Name ('First' + 'Last'): ";
 			getline(cin, name);
 		}
 
 		int menu_item = 0;
 		while (menu_item < 11 || menu_item > 24)
 		{
-			cout << "\nPlease Select a Valid Item from the Practice List: ";
+			cout << "\nPlease select from the following practice items in the table above!: ";
 			cin >> menu_item;
 			if (cin.good())
 			{
@@ -161,7 +161,7 @@ int main()
 			cout << "Invalid practice item!\n\n";
 		};
 
-		std::cout << "Another practice? (y/n): ";
+		std::cout << "Want to practice another item? (y/n): ";
 		std::cin >> choice;
 		std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		std::cout << endl;
@@ -261,7 +261,7 @@ void unsign_decimalI_to_base(string name, int base, unsigned int len)
 			std::cout << "octal representation : ";
 			break;
 		case 16:
-			std::cout << "hexadecimal representation: ";
+			std::cout << "hexdecimal representation: ";
 		}
 		
 		while (true)
@@ -310,7 +310,7 @@ void unsign_decimalI_to_base(string name, int base, unsigned int len)
 		std::cout << "octal." << endl;
 		break;
 	case 16:
-		std::cout << "hexadecimal." << endl;
+		std::cout << "hexdecimal." << endl;
 	}
 	std::cout << "You have done " << correct << " correctly." << endl << endl;
 }
@@ -424,7 +424,7 @@ void unsign_base_to_decimal(string name, int base, unsigned int len)
 		std::cout << "Octal";
 		break;
 	case 16:
-		std::cout << "Hexadecimal";
+		std::cout << "Hexdecimal";
 	}
 	std::cout << " to decimal." << endl
 		<< "You have done " << correct << " correctly." << endl << endl;
@@ -531,48 +531,6 @@ void signed_decimal_to_binary(string name, int format, unsigned int len)
 				continue;
 			}
 		}
-		//std::cin >> converted_input;
-		//std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-		//converted_rep = Repeat_Division(abs(rand_val), 2);
-		//while (converted_rep.length() < len)
-		//{
-		//	converted_rep = '0' + converted_rep;
-		//}
-		//
-		//switch (format)
-		//{
-		//case 1:			// Sign-magnitued
-		//	if (rand_val < 0)
-		//		converted_rep[0] = '1';
-		//	break;
-		//case 2:			// 1's complement
-		//	if (rand_val < 0)
-		//	{
-		//		for (int i = 0; i < len; i++)
-		//			if (converted_rep[i] == '0')
-		//				converted_rep[i] = '1';
-		//			else
-		//				converted_rep[i] = '0';
-		//	}
-		//	break;
-		//case 3:			// 2's complement
-		//	if (rand_val < 0)
-		//	{
-		//		int i;
-		//		for (i = len - 1; i >= 0; i--)
-		//		{
-		//			if (converted_rep[i] == '1')
-		//				break;
-		//		}
-		//		i--;
-		//		for (; i >= 0; i--)
-		//			if (converted_rep[i] == '0')
-		//				converted_rep[i] = '1';
-		//			else
-		//				converted_rep[i] = '0';
-		//	}
-		//}
 
 		if (converted_rep.compare(converted_input) == 0)
 		{
@@ -681,33 +639,6 @@ void signed_binary_to_decimal(string name, int format, unsigned int len)
 				continue;
 			}
 		}
-		//std::cin >> decimal_input;
-		//std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-		//for (int i = len - 1; i >= 0; i--)
-		//{
-		//	if (isdigit(rand_pattern[i]))
-		//		decimal_rep += (rand_pattern[i] - '0') * weight;
-		//	else
-		//		decimal_rep += (rand_pattern[i] - 'A' + 10) * weight;
-		//	weight = weight * 2;
-		//}
-
-		//if (rand_pattern[0] == '1')
-		//{
-		//	switch (format)
-		//	{
-		//	case 1:			// Sign-magnitued
-		//		decimal_rep = -(decimal_rep - weight / 2);
-		//		break;
-		//	case 2:			// 1's complement
-		//		decimal_rep = decimal_rep - weight + 1;
-		//		break;
-		//	case 3:			// 2's complement
-		//		decimal_rep = decimal_rep - weight;
-		//		break;
-		//	}
-		//}
 
 		if (decimal_rep == decimal_input)
 		{
@@ -873,8 +804,6 @@ void addition_1_complement(string datax, string datay, unsigned int length)
 		second_y += '1';
 	}
 	//	bool overflow = binary_addition(sum, second_y, second_sum, second_carry, 8);
-
-
 
 	if (overflow)
 		std::cout << "Overflow occurs!" << endl << endl;
