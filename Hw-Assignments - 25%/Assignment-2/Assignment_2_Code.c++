@@ -1,20 +1,22 @@
 /*
-  Online version:   https://www.onlinegdb.com/edit/qMfaC1J0-#
-  Use this tool for data representation practice
-   11. convert unsigned decimal numbers to binary numbers
-   12. convert unsigned binary numbers to decimal numbers
-   13. convert unsigned decimal numbers to octal numbers
-   14. convert unsigned octal numbers to decimal numbers
-   15. convert unsigned decimal numbers to hexadecimal numbers
-   16. convert unsigned hexadecimal numbers to decimal numbers
-   17. convert signed decimal numbers to sign-magnitude binary numbers
-   18. convert signed decimal numbers to 1's complementary binary numbers
-   19. convert signed decimal numbers to 2's complementary binary numbers
-   20. convert sign-magnitude binary numbers to decimal numbers
-   21. convert 1's complementary binary numbers to decimal numbers
-   22. convert 2's complementary binary numbers to decimal numbers
-   23. 1's complement arithmetic operation
-   24. 2's complement arithmetic operation
+  Author: C-Kuzy
+  Description: CDA-3103 Computer Organization Major Assignment #2
+
+  	Use this tool for data representation practice
+   		11. convert unsigned decimal numbers to binary numbers
+   		12. convert unsigned binary numbers to decimal numbers
+   		13. convert unsigned decimal numbers to octal numbers
+   		14. convert unsigned octal numbers to decimal numbers
+   		15. convert unsigned decimal numbers to hexadecimal numbers
+   		16. convert unsigned hexadecimal numbers to decimal numbers
+   		17. convert signed decimal numbers to sign-magnitude binary numbers
+   		18. convert signed decimal numbers to 1's complementary binary numbers
+   		19. convert signed decimal numbers to 2's complementary binary numbers
+   		20. convert sign-magnitude binary numbers to decimal numbers
+   		21. convert 1's complementary binary numbers to decimal numbers
+   		22. convert 2's complementary binary numbers to decimal numbers
+   		23. 1's complement arithmetic operation
+   		24. 2's complement arithmetic operation
 */
 
 #include <iostream>
