@@ -3,8 +3,6 @@
  Description: Assignment #4 Points/Question Description
 
 Part #1. Complete the following 6 Questions: Reference from page # in textbook
-
-    Ref
     
     |  Total Pts:  |   Question #   | Exercise Value |                                 Description of Question Task/Work Needed                                    |
 
