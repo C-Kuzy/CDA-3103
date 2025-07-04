@@ -62,5 +62,8 @@
 
         Total Pts: 100
 
- Part #2: Submit work to Canvas Submission
+ Part #2: Create .PNG files of the textbook questions
+    - Use Snipping Tool to screenshot and save files
+        
+ Part #3: Submit work to Canvas Submission
 */
