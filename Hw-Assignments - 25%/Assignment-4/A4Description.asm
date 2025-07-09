@@ -8,8 +8,8 @@ Part #1. Complete the following 6 Questions: Reference from Chapter #4 in the te
 
         3 Points      Question #1:     The NOT in an assembly operator that can be used in RISC-V assembly programs. However, NOT is not listed
                                        as a RV32I operator on page 104 of the 'risc-v-isa-spec.pdf' on Canvas. This means that the NOT operator
-                                                        is translated into a different statement. What is the translation of 'not rd, rs1' in RISC-V ISA? Justify
-                                                        why the translation works correctly. (Hint: look for 'NOT' in 'risc-v-asm-manual.pdf' on Canvas.)
+                                       is translated into a different statement. What is the translation of 'not rd, rs1' in RISC-V ISA? Justify
+                                       why the translation works correctly. (Hint: look for 'NOT' in 'risc-v-asm-manual.pdf' on Canvas.)
 
        12 Points      Question #2:     Write RISC-V assembly code for placing the following immediate constants in register a0. Use a minimum of
                                        number of instructions. Comment each line of assembly code. 
