@@ -15,10 +15,10 @@
 
  "Files This Repository Wants to detect:"
   *.c++ linguist-detectable=true
-  *.s linguist-detectable=true
-  *.pdf linguist-detecable=true
+  *.asm linguist-detectable=true
+  *.pdf linguist-detectable=true
 
- "Files This Repository is Restricing:"
+ "Files This Repository is Restricting:"
   *.py linguist-detectable=false
   *.java linguist-detectable=false
   *.c linguist-detectable=false
@@ -29,6 +29,6 @@
   *.go linguist-detectable=false
   *.txt linguist-detectable=false
   *.rtf linguist-detectable=false
-  *.docx linguist-detecable=false
-  *.xlsx linguist-detecable=false
-  *.pptx linguist-detecable=false
+  *.docx linguist-detectable=false
+  *.xlsx linguist-detectable=false
+  *.pptx linguist-detectable=false
