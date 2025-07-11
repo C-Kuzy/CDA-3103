@@ -5,9 +5,20 @@
 
 */
 
-    // Question #1 
+    // Question #1: risc-v-asm-manual.pdf
 
-        "Considering that 'risc-v-isa-spec.pdf' doesn't include 'NOT', we can translate 'not rd, rs"
+        "Reference 3.1.1.6 NOT: Given the following syntax statement:'not rd, rs1'"
+            "NOT, known as a bit-wise invert operation performs one's complment arithmetic"                     
+
+                "Translation: xori rd, rs1, -1  [ -1 = 0xFFFFFFFF]"
+
+                    /* Where 
+                        rs1     source register 1
+                        rd      destination register 
+                    */
+
+            "Why does it work?: The translation works correctly because "
+
 
     // QUESTION #2:
 
