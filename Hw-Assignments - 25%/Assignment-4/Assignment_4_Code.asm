@@ -19,8 +19,8 @@
 
             "Why does it work?: The translation works correctly because NOT instructions flip each bit of the register.
                                 NOT translates to the exclusive OR operation XORI which implements the negation. Which 
-                                then the result is loaded into the destination register.
-            "
+                                then the result is loaded into the destination register. For our result, every 0 will
+                                become 1 and every 1 will become zero."
 
     // QUESTION #2:
 
