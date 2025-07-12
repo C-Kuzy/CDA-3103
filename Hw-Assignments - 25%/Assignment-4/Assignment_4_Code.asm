@@ -90,20 +90,19 @@
                             }
                     """
 
+        /* TEST "if (( a > b ) && ( c > d ))" with chk_a_grtr_b: && chk_c_grtr_d: && then_op*/
+
         chk_a_grtr_b:
-            blt t1, t0, chk_c_grtr_d       # Checks the following "if (t1 < t0) go to chk_c_grtr_d
-            j else_op                      #
+            blt t1, t0, chk_c_grtr_d       # Checks the following """if (t1 < t0 == t0 > t1) move to chk_c_grtr_d"""
+            jump else_op                   # Moves directly to else block if 'a' is not greater than 'b'
 
         chk_c_grtr_d:
-            bge t2, t3, variables          # if t
-            addi t0, t1,                # t0 = t1 + imm 
-
-        
-            blt t0, t1, target             # if t0 < t1 then target
+            blt t3, t2, then_op            # if t
+            jump else_op                   # t0 = t1 + imm 
 
         then_op:
-
-        j end chck
+            
+        
 
         else_op:
 
