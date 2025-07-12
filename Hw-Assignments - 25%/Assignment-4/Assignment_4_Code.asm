@@ -19,55 +19,62 @@
                     */
 
             "Why does it work?: The translation works correctly because NOT instructions flip each bit of the register.
-                                NOT translates to the exclusive OR operation XORI which implements the negation. Which 
+                                NOT translates to the exclusive OR operation XORI which implements a negation. Which 
                                 then the result is loaded into the destination register. For our result, every zero will
                                 become one and every one will become zero."
 
     // QUESTION #2: Values to contain in register a0: { a. -2037 | b. 4169 | c. 0xD6A | d. 1010110110110000010011_2 }
+                                    "VALUE RANGE: [-2048, 2047]"
 
         "Part A: -2037"
 
-            addi a0, x0, -2037      # Arithmetic Instruction: Load's the value -2037 into register a0 
+            addi a0, zero, -2037    # Arithmetic Instruction: Load's x0 and add value -2037 into register a0 
                                     # Meaning: a0 = x0 + (-2037)
                                         
                                         /* Description of the code instructions
                                             -2037      subtract by value of 2037
-                                            x0         register hard-wired to value 0
+                                            zero/x0    register hard-wired to value 0
                                             a0         register storage
                                         */
 
         "Part B: 4169"
 
-            lui a0, 0x1             # Data Transfer U Format: Loads 20 upper bits (a0 == 0x1000) && 12 lower bits (169)
-            addi a0, a0, 169        # Load/Store Instruction: Load's value 4000 by a0 = 0x1000
-                                    # Arithmetic Instruction: Load's the value 
-                                    # Meaning: a0 = 0x1
+            lui a0, 0x1             # Data Transfer U Format: Loads 20 upper bits (a0 == 0x1) && 12 bits to the left
+            addi a0, a0, 73         # Load/Store Instruction: Load's value 4096 to register a0 (1*2^12)
+                                    # Arithmetic Instruction: Load's addition to register a0 and 73
+                                    # Meaning: a0 = 4096 + 73 = 4169
 
                                         /* Description of the code instructions
-                                            
+                                            0x1        calculates value after shifting left 12 bits
+                                            73         value left over to be added
                                             a0         register storage
                                         */
 
-        "Part C: 0xD6A = 3434"
+        "Part C: 0xD6A = 3434"       
 
-            addi a0, x0, 0x6DA      # Arithmetic Instruction: Load's the value 0x6DA or 3434 into register a0
-                                    # Meaning: a0 = x0 + 3434
+            lui a0, 0x1             # Data Transfer U Format: Loads 20 upper bits (a0 == 0x1) && 12 bits to the left
+            addi a0, a0, 0xD6A      # Load/Store Instruction: Load's value 4096 to register a0 (1*2^12)
+                                    # Arithmetic Instruction: Load's the value 0x6DA or -662 into register a0
+                                    # Meaning: a0 = 4096 + (-662) = 3434
 
                                         /* Description of the code instructions
-                                            3434 or 0x6DA         addition by value of 3434
-                                            x0         register hard-wired to value 0
+                                            0x1        calculates value after shifting left 12 bits
+                                            -662 or 0x6DA     subtraction by value of 662
                                             a0         register storage 
                                         */
 
-        "Part D: 1010110110110000010011_2 = 710931"
+        "Part D: 1010110110110000010011_2 = 2845715"   // CONVERT BINARY TO HEXADECIMAL: 2B6C13 >> Make 8-Bit: 002B6C13
+                                                       // >> Count 5 From Left && + 1: 002B7C13 
 
-            lui a0, 0xADB           # Data Transfer U Format: Loads 20 upper bits (a0 == 0xADB) && 12 
-            addi a0, a0, 0x13       # Load/Store Instruction: first a0 storage value is 710912
+            lui a0, 0x2B7           # Data Transfer U Format: Loads 20 upper bits (a0 == 0x2B7) && 12 bits to the left
+            addi a0, a0, 0xC13      # Load/Store Instruction: first a0 storage value is 710912
                                     # Arithmetic Instruction: 
                                     # Meaning: a0 = 
 
                                         /* Description of the code instructions
-                                        
+                                            0x2B7      addition by value 
+                                            0xC13       
+                                            a0         register storage
                                         */
 
     // QUESTION #3:        Integer Variables: a, b, c, d, e, f      ||      Registers: t0, t1, t2, t3, t4, t5
@@ -79,7 +86,7 @@
 
     // QUESTION #4:
 
-        reverse_char:
+        rev_char:
             addi sp, sp, -16         # Allocate stack space for 4 registers
             sw   ra, 12(sp)          # Save return address
             sw   s0, 8(sp)           # Save s0 (base pointer)
@@ -91,8 +98,8 @@
             addi t0, t0, -1          # adjust for zero-based indexing
             mv   s1, t0              # s1 = address of last character (end pointer)
 
-        reverse_loop:
-            bge  s0, s1, reverse_done  # If start >= end, we're done
+        rev_loop:
+            bge  s0, s1, rev_done  # If start >= end, we're done
 
             lbu  s2, 0(s0)           # s2 = *start
             lbu  t1, 0(s1)           # t1 = *end
@@ -101,9 +108,9 @@
 
             addi s0, s0, 1           # Move start forward
             addi s1, s1, -1          # Move end backward
-            j    reverse_loop        # Repeat until pointers meet
+            j    rev_loop        # Repeat until pointers meet
 
-        reverse_done:
+        rev_done:
             mv   a0, a0              # Return base address in a0
 
             lw   ra, 12(sp)          # Restore return address
@@ -114,5 +121,7 @@
             ret                      # Return to caller
 
     // QUESTION #5:
+
+
 
     // QUESTION #6:
