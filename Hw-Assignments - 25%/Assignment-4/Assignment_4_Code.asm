@@ -90,26 +90,39 @@
                             }
                     """
 
-        /* TEST "if (( a > b ) && ( c > d ))" with chk_a_grtr_b: && chk_c_grtr_d: && then_op*/
+        /* TEST "if (( a > b ) && ( c > d ))" with Chk_A_Grtr_B: && Chk_C_Grtr_D: && Then_OP */
 
-        chk_a_grtr_b:
-            blt t1, t0, chk_c_grtr_d       # Checks the following """if (t1 < t0 == t0 > t1) move to chk_c_grtr_d"""
-            jump else_op                   # Moves directly to else block if 'a' is not greater than 'b'
+        Chk_A_Grtr_B:
+            blt t1, t0, Chk_C_Grtr_D       # Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
+            j Else_OP                      # Moves directly to else block if 'a' is not greater than 'b'
 
-        chk_c_grtr_d:
-            blt t3, t2, then_op            # if t
-            jump else_op                   # t0 = t1 + imm 
+        Chk_C_Grtr_D:
+            blt t3, t2, Then_OP            # if t
+            j Else_OP                      # t0 = t1 + imm 
 
-        then_op:
+        Then_OP:
+            srai t4, t4, 2                 # shift right by power of 2^n so 2^2 = 4, then divide
+            slli t5, t5, 2                 # shift left 
             
+            j End                          # After completion, jump to End function
+
+        /* TEST "else" with Else_OP */
+
+        Else_OP:
+            sub t6, t0, t1                 # Solving for variable 'e' ( a - b ) = result stored t6
+            sub s0, t2, t3                 # Solving for variable 'e' ( c - d ) = result stored s0
+            add t4, t6, s0                 # Solving for variable 'e' ( t6 + s0 ) = result stored t4
+
+            add t6, t0, t1                 # Solving for variable 'f' ( a + b ) = result stored t6
+            add s1, t2, t3                 # Solving for variable 'f' ( c + d ) = result stored s1
+            sub t5, t6, s1                 # Solving for variable 'f' ( t6 + s1 ) = result stroed t5
+            
+            j End                          # After completion, jump to End function
         
-
-        else_op:
-
+        End:
+                                           #
 
         
-        
-
     // QUESTION #4:
 
 
