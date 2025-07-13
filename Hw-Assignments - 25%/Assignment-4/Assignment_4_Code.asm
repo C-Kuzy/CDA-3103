@@ -101,9 +101,8 @@
             j Else_OP                      # 'j' moves directly to else block if 'c' is not greater than 'd'
 
         Then_OP:
-            srai t4, t4, 2                 # Shift right arithmetic immediate by power of 2^n so 2^2 = 4, then divide
-            slli t5, t5, 2                 # Shift left logical immediate by 
-            
+            srai t4, t4, 2                 # Shift right arithmetic immediate by power of 2^n so 2^2 = 4, then divide by 4 | e = e / 4 |
+            slli t5, t5, 2                 # Shift left logical immediate by power of 2^n so 2^2 = 4, then multiply by 4 | f = f * 4 | 
             j End                          # 'j' moves after completion, jump to End function
 
         /* TEST "else" with Else_OP */
@@ -120,16 +119,9 @@
             j End                          # After completion, jump to End function
         
         End:
-                                           # 
+            jr ra                          # Acts as a return statement to end the assembly program
 
-        
     // QUESTION #4:
-
-
-
-
-
-
 
         rev_char:
             addi sp, sp, -16         # Allocate stack space for 4 registers
@@ -167,6 +159,20 @@
 
     // QUESTION #5:
 
+                    """     int fibonacci ( int num ) {
+                                if ( n <= 1 )
+                                    return n;
+                                else
+                                    return ( fibonacci ( n - 1 ) + fibonacci ( n - 2 ) );
+                                }
+                    """
+        
+        Fib_Main:
+            addi sp, sp, -20         #
+            sw ra, 16(sp)            #
+            sw fp, 12(sp)            #
+            sw s0, 8(sp)
+            mv fp, sp                #
 
 
     // QUESTION #6:
