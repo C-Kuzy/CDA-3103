@@ -170,9 +170,17 @@
         Fib_Main:
             addi sp, sp, -20         #
             sw ra, 16(sp)            #
-            sw fp, 12(sp)            #
-            sw s0, 8(sp)
-            mv fp, sp                #
+            sw s0, 12(sp)            #
+            sw s1, 8(sp)
+            
+            addi t0, zero, 1         #
+            blt t0, a0, recursive                         #
+            j Base_OP
 
+        Fib_N1
+
+        Fib_N2
+
+        Base_OP
 
     // QUESTION #6:
