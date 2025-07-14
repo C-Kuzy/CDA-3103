@@ -168,24 +168,37 @@
                     """
         
         Fib_Main:
-            addi sp, sp, -20         #
-            sw ra, 16(sp)            #
-            sw s0, 12(sp)            #
-            sw s1, 8(sp)
+            addi sp, sp, -20         # 
+            sw ra, 16(sp)            # 
+            sw s0, 12(sp)            # 
+            sw s1, 8(sp)             # 
             
-            addi t0, zero, 1         #
-            blt t0, a0, recursive    #
-            j       Base_OP          #
+            addi t0, zero, 1         # 
+            blt t0, a0, recursive    # 
+            j       Base_OP          # 
 
         recursive:
+            /* Fib_N1 */
+                addi s0, a0, -1      # 
+                mv a0, s0            # 
+                jal Fib_Main         # 
+                mv s1, a0            # 
 
-        Fib_N1
-
-        Fib_N2
+            /* Fib_N2 */
+                addi s0, s0, -1      # 
+                mv a0, s0            # 
+                jal Fib_Main         # 
+                add a0, s1, a0       # 
+                j       Fib_End      # 
 
         Base_OP:
-        mv a0, a0                    # Returns 'n' value (0 or 1) from if statement
+            mv a0, a0                # Returns 'n' value (0 or 1) from if statement
 
         Fib_End:
+            lw ra, 16(sp)
+            lw s0, 12(sp)
+            lw s1, 8(sp)
+            addi sp, sp, 20
+            jr ra
 
     // QUESTION #6:
