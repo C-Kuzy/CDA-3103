@@ -94,16 +94,16 @@
 
         Chk_A_Grtr_B:
             blt t1, t0, Chk_C_Grtr_D       # Branch if less than Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
-            j Else_OP                      # 'j' moves directly to else block if 'a' is not greater than 'b'
+            j       Else_OP                # 'j' moves directly to else block if 'a' is not greater than 'b'
 
         Chk_C_Grtr_D:
             blt t3, t2, Then_OP            # Branch if less than Checks the following """if (t3 < t2 == t2 > t3) move to Then_OP"""
-            j Else_OP                      # 'j' moves directly to else block if 'c' is not greater than 'd'
+            j       Else_OP                # 'j' moves directly to else block if 'c' is not greater than 'd'
 
         Then_OP:
             srai t4, t4, 2                 # Shift right arithmetic immediate by power of 2^n so 2^2 = 4, then divide by 4 | e = e / 4 |
             slli t5, t5, 2                 # Shift left logical immediate by power of 2^n so 2^2 = 4, then multiply by 4 | f = f * 4 | 
-            j End                          # 'j' moves after completion, jump to End function
+            j       End                    # 'j' moves after completion, jump to End function
 
         /* TEST "else" with Else_OP */
 
@@ -116,7 +116,7 @@
             add s1, t2, t3                 # Add: Solving for variable 'f' ( c + d ) = result stored s1
             sub t5, t6, s1                 # Subtract: Solving for variable 'f' ( t6 + s1 ) = result stored t5
             
-            j End                          # After completion, jump to End function
+            j       End                    # After completion, jump to End function
         
         End:
             jr ra                          # Acts as a return statement to end the assembly program
@@ -174,13 +174,18 @@
             sw s1, 8(sp)
             
             addi t0, zero, 1         #
-            blt t0, a0, recursive                         #
-            j Base_OP
+            blt t0, a0, recursive    #
+            j       Base_OP          #
+
+        recursive:
 
         Fib_N1
 
         Fib_N2
 
-        Base_OP
+        Base_OP:
+        mv a0, a0                    # Returns 'n' value (0 or 1) from if statement
+
+        Fib_End:
 
     // QUESTION #6:
