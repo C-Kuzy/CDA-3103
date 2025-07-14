@@ -26,6 +26,8 @@
     // QUESTION #2: Values to contain in register a0: { a. -2037 | b. 4169 | c. 0xD6A | d. 1010110110110000010011_2 }
                                     "VALUE RANGE: [-2048, 2047]"
 
+        a0_reg:
+
         "Part A: -2037"
 
             addi a0, zero, -2037    # Arithmetic Instruction: Load's x0 and add value -2037 into register a0 
@@ -92,6 +94,9 @@
 
         /* TEST "if (( a > b ) && ( c > d ))" with Chk_A_Grtr_B: && Chk_C_Grtr_D: && Then_OP */
 
+    Main_OP:
+        j       Chk_A_Grtr_B               # Main Operation jumps directly to check the if statement
+
         Chk_A_Grtr_B:
             blt t1, t0, Chk_C_Grtr_D       # Branch if less than Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
             j       Else_OP                # 'j' moves directly to else block if 'a' is not greater than 'b'
@@ -119,24 +124,19 @@
             j       End                    # After completion, jump to End function
         
         End:
-            jr ra                          # Acts as a return statement to end the assembly program
+            jr ra                          # Acts as a termination statement to end the RISC-V program
 
     // QUESTION #4:
 
-        rev_char:
-            addi sp, sp, -16         # Allocate stack space for 4 registers
-            sw   ra, 12(sp)          # Save return address
-            sw   s0, 8(sp)           # Save s0 (base pointer)
-            sw   s1, 4(sp)           # Save s1 (end pointer)
-            sw   s2, 0(sp)           # Save s2 (temporary register)
+    Main_OP:
+        j       Rev_Char             # Jumps straight to Rev_Char function
 
-            mv   s0, a0              # s0 = base address of array
-            add  t0, a0, a1          # t0 = a0 + a1 (byte offset to end, not correct yet!)
-            addi t0, t0, -1          # adjust for zero-based indexing
-            mv   s1, t0              # s1 = address of last character (end pointer)
-
-        rev_loop:
-            bge  s0, s1, rev_done  # If start >= end, we're done
+        Rev_Char:
+            addi t0, zero, t0        # Allocate stack space for 4 registers
+            addi t1, a1, -1          # Save return address
+        
+        Rev_Loop:
+            bge  t0, t1, Rev_Comp    # If start >= end, we're done
 
             lbu  s2, 0(s0)           # s2 = *start
             lbu  t1, 0(s1)           # t1 = *end
@@ -145,9 +145,9 @@
 
             addi s0, s0, 1           # Move start forward
             addi s1, s1, -1          # Move end backward
-            j    rev_loop        # Repeat until pointers meet
+            j    Rev_Loop            # Repeat until pointers meet
 
-        rev_done:
+        Rev_Done:
             mv   a0, a0              # Return base address in a0
 
             lw   ra, 12(sp)          # Restore return address
@@ -155,7 +155,7 @@
             lw   s1, 4(sp)
             lw   s2, 0(sp)
             addi sp, sp, 16          # Deallocate stack space
-            ret                      # Return to caller
+            jr ra                    # Return to caller
 
     // QUESTION #5:
 
@@ -167,19 +167,22 @@
                                 }
                     """
         
+    Fib_OP:
+        j       Fib_Main             #
+
         Fib_Main:
-            addi sp, sp, -20         # 
+            addi sp, sp, -20         # Stack allocation for ra, s0, and s1
             sw ra, 16(sp)            # 
             sw s0, 12(sp)            # 
             sw s1, 8(sp)             # 
             
             addi t0, zero, 1         # 
             blt t0, a0, recursive    # 
-            j       Base_OP          # 
+            j       Base_OP          # IF value is less than or equal to one, jump to branch "Base_OP"
 
         recursive:
             /* Fib_N1 */
-                addi s0, a0, -1      # 
+                addi s0, a0, -1      # Stores s0 = n - 1
                 mv a0, s0            # 
                 jal Fib_Main         # 
                 mv s1, a0            # 
@@ -189,16 +192,41 @@
                 mv a0, s0            # 
                 jal Fib_Main         # 
                 add a0, s1, a0       # 
-                j       Fib_End      # 
+                j       Fib_End      # Jump to branch function "Fib_End" upon recursive loop completion
 
         Base_OP:
             mv a0, a0                # Returns 'n' value (0 or 1) from if statement
 
         Fib_End:
-            lw ra, 16(sp)
-            lw s0, 12(sp)
-            lw s1, 8(sp)
-            addi sp, sp, 20
-            jr ra
+            lw ra, 16(sp)            #
+            lw s0, 12(sp)            # 
+            lw s1, 8(sp)             #
+            addi sp, sp, 20          # Stack is deallocated from program function call
+            jr ra                    # Return directly to the caller
 
     // QUESTION #6:
+
+                    """     int sum_number( int ) {
+                                int result = 0;
+                                // Calculate n + ( n - 1 ) + ... + 1
+                                while ( n >= 1 ) {
+                                    result += n;
+                                    n--;
+                                }
+                                return result;
+                            } 
+                                                                                            
+                            int swap_sum ( int * x, int *y ) {
+                                // swap the numbers
+                                int temp;
+                                temp = *y;
+                                *y = *x;
+                                *x = temp;
+
+                                // return the sum of number
+                                int sum_x = sum_number( *x );
+                                int sum_y = sum_number( *y );
+                                return sum_x + sum_y;
+                            }
+                    """
+    
