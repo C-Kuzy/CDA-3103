@@ -139,17 +139,16 @@
         
         Rev_Loop:
             bge  t0, t1, Rev_Done    # IF start >= end, then move to 'Rev_Done'
-            lbu  t3, 0(t0)           # Load Byte Unsigned: t3 = *t0 which prompts 
+            lbu  t3, 0(t0)           # Load Byte Unsigned: t3 = *t0 
             lbu  t4, 0(t1)           # Load Byte Unsigned: t4 = *t1
-            sb   t4, 0(t0)           # Store Byte: *start = *end
-            sb   t3, 0(t1)           # Store Byte: *end = original *start
+            sb   t4, 0(t0)           # Store Byte: *t0 = t4
+            sb   t3, 0(t1)           # Store Byte: *t1 = t3
             addi t0, t0, 1           # Addition Immediate: t0 -> increment t0++
             addi t1, s1, -1          # Addition Immediate: t1 -> decrement t1--
-            j       Rev_Loop         # 'j' moves after completion, back to run through 'Rev_Loop'
+            j       Rev_Loop         # 'j' jumps after completion, back to top of 'Rev_Loop'
 
         Rev_Done:
-            addi a0, a0, 0           # Returns the base address within register a0
-            jr ra                    # Return to caller
+            jr ra                    # Function returns to caller as base address within a0
 
     // QUESTION #5:
 
@@ -162,40 +161,38 @@
                     """
         
     Main_OP:
-        j       Fib_Main             # Jumps directly to main 
+        j       Fib_Main             # Jumps directly to Fib_Main, executing the program
 
         Fib_Main:
-            addi sp, sp, -20         # Stack allocation for ra, s0, and s1
+            addi sp, sp, -20         # Stack allocation for 20 bytes of the stack
             sw ra, 16(sp)            # 
             sw s0, 12(sp)            # 
             sw s1, 8(sp)             # 
             
             addi t0, zero, 1         # 
-            blt t0, a0, recursive    # 
-            j       Base_OP          # 'j' jumps to Base_OP IF value is less than or equal to one
+            blt a0, t0, Base_OP      # Branch If Less Than:
+            beq a0, t0, Base_OP 
 
-        recursive:
             /* Fibonacci( n - 1 ) */
-                addi s0, a0, -1      # Addition Immediate: 
-                mv a0, s0            # 
-                jal Fib_Main         # 
-                mv s1, a0            # 
+            addi s0, a0, -1          # Addition Immediate: 
+            addi a0, s0, 0           # Addition Immediate:
+            jal Fib_Main             # Jump & Link: 
+            addi s1, a0, 0           # Addition Immediate
 
             /* Fibonacci( n - 2 ) */
-                addi s0, s0, -1      # 
-                mv a0, s0            # 
-                jal Fib_Main         # 
-                add a0, s1, a0       # 
-                j       Fib_End      # Jump to branch function "Fib_End" upon recursive loop completion
+            addi s0, s0, -1          # 
+            jal Fib_Main             # 
+            add a0, s1, a0           # Addition:
+            j       Fib_End          # Jump to branch function "Fib_End" upon recursive loop completion
 
         Base_OP:
-            addi a0, a0, 0           # Returns 'n' value (0 or 1) from if statement
+            addi a0, a0, 0           # Addition Immediate: Returns 'n' value (0 or 1) from IF statement
 
         Fib_End:
             lw ra, 16(sp)            # Load Word: 
             lw s0, 12(sp)            # Load Word:
             lw s1, 8(sp)             # Load Word:
-            addi sp, sp, 20          # Stack is deallocated from program function call
+            addi sp, sp, 20          # Addition Immediate: Stack is deallocated from program function call
             jr ra                    # Return directly to the caller
 
     // QUESTION #6:
@@ -224,41 +221,12 @@
                             }
                     """
     Main_OP:
-    
-        SUM_NUMBER:
-        addi t0, a0, 0          # t0 = n
-        addi t1, x0, 0          # t1 = result = 0
-        WHILE:
-        blt  t0, 1, END_WHILE   # while(n >= 1)
-        add  t1, t1, t0         # result += n
-        addi t0, t0, -1         # n--
-        j    WHILE              # jump back to loop
-        END_WHILE:
-        addi a0, t1, 0          # return result
-        jr   ra                 # jump back to caller
+        j       Sum_Main             # 'j' jumps  
 
-        SWAP_SUM:
-        lw   t0, 0(a0)          # t0 = *x
-        lw   t1, 0(a1)          # t1 = *y
-
-        sw   t0, 0(a1)          # *y = *x
-        sw   t1, 0(a0)          # *x = temp
-
-        lw   a0, 0(a0)          # a0 = *x
-        addi sp, sp, -8         # allocate space on the stack
-        sw   ra, 4(sp)          # return address
-        sw   a1, 0(sp)          # save y pointer for later
-        jal  ra, SUM_NUMBER     # call function 
-        addi t2, a0, 0          # t2 = sum_x
-        jal  ra, SUM_NUMBER     # call function
-
-        lw   a1, 0(sp)          # restore y pointer
-        lw   a0, 0(a1)          # a0 = *y
-        jal  ra, SUM_NUMBER     # call function
-        addi t3, a0, 0          # t3 = sum_y
-
-        lw   ra, 4(sp)          # restore initial return address
-        addi sp, sp, 8          # deallocate stack space
-
-        add  a0, t2, t3         # add results, return in a0
-        jr   ra                 # jump back to caller
+        Sum_Main:
+        addi sp, sp, -24             # t0 = n
+        sw a0, 20(sp)                # t1 = result = 0
+        sw ra, 16(sp)
+        sw a1, 
+        sw a2, 
+        sw t1, 
