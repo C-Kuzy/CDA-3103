@@ -132,7 +132,7 @@
         j       Rev_Char             # Jumps straight to Rev_Char function
 
         Rev_Char:
-            addi a0, a2, 0           # Addition Immediate: a0 = Original Base Pointer stored
+            addi a0, a2, 0           # Addition Immediate: a0 = Original Base Pointer of the character array
             addi t0, a2, 0           # Addition Immediate: t0 = Base Case == *Start Pointer*
             addi t1, a1, -1          # Addition Immediate: t1 = (char_length) - 1
             add  t1, a0, t1          # Addition
@@ -148,7 +148,7 @@
             j       Rev_Loop         # 'j' jumps back to the top of the 'Rev_Loop'
 
         Rev_Done:
-            addi a2, a0, 0           # Returns the base address within register a0
+            addi a0, a0, 0           # Returns the base address within register a0
             jr ra                    # Return to caller
 
     // QUESTION #5:
@@ -176,7 +176,7 @@
 
         recursive:
             /* Fibonacci( n - 1 ) */
-                addi s0, a0, -1      # Stores s0 = n - 1
+                addi s0, a0, -1      # Addition Immediate: 
                 mv a0, s0            # 
                 jal Fib_Main         # 
                 mv s1, a0            # 
