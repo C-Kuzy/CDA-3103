@@ -93,7 +93,6 @@
                     """
 
         /* TEST "if (( a > b ) && ( c > d ))" with Chk_A_Grtr_B: && Chk_C_Grtr_D: && Then_OP */
-
     Main_OP:
         j       Chk_A_Grtr_B         # Main Operation jumps directly to check the if statement
 
@@ -111,16 +110,13 @@
             j       End              # 'j' moves after completion, jump to End function
 
         /* TEST "else" with Else_OP */
-
         Else_OP:
             sub t6, t0, t1           # Subtract: Solving for variable 'e' ( a - b ) = result stored t6
             sub s0, t2, t3           # Subtract: Solving for variable 'e' ( c - d ) = result stored s0
             add t4, t6, s0           # Add: Solving for variable 'e' ( t6 + s0 ) = result stored t4
-
             add t6, t0, t1           # Add: Solving for variable 'f' ( a + b ) = result stored t6
             add s1, t2, t3           # Add: Solving for variable 'f' ( c + d ) = result stored s1
             sub t5, t6, s1           # Subtract: Solving for variable 'f' ( t6 + s1 ) = result stored t5
-            
             j       End              # 'j' moves after completion, jump to End function
         
         End:
@@ -164,36 +160,39 @@
         j       Fib_Main             # Jumps directly to Fib_Main, executing the program
 
         Fib_Main:
-            addi sp, sp, -20         # Stack allocation for 20 bytes of the stack
-            sw ra, 16(sp)            # 
-            sw s0, 12(sp)            # 
-            sw s1, 8(sp)             # 
+            addi sp, sp, -20         # Addition Immediate: Stack allocation for 20 bytes of the stack (ra, a0, and s1)
+            sw ra, 16(sp)            # Store Word: ra saves our return address
+            sw s0, 12(sp)            # Store Word: s0 is saved for our arguments
+            sw s1, 8(sp)             # Store Word: s1 is saved for the fibonacci result
             
-            addi t0, zero, 1         # 
-            blt a0, t0, Base_OP      # Branch If Less Than:
-            beq a0, t0, Base_OP 
+            addi t0, zero, 1         # Addition Immediate: Used as the base case constant t0 = 1
+            blt a0, t0, Base_OP      # Branch If Less Than: IF n < 1, then move onto Base_OP
+            beq a0, t0, Base_OP      # Branch If Equal: IF n == 1 then move onto Base_OP
 
-            /* Fibonacci( n - 1 ) */
-            addi s0, a0, -1          # Addition Immediate: 
-            addi a0, s0, 0           # Addition Immediate:
-            jal Fib_Main             # Jump & Link: 
-            addi s1, a0, 0           # Addition Immediate
+            /* fibonacci( n - 1 ) */
+            addi s0, a0, -1          # Addition Immediate: Defines fibonacci argument s0 = n - 1
+            addi a0, s0, 0           # Addition Immediate: Changes set argument a0 = s0
+            jal Fib_Main             # Jump & Link: Calls the function Fib_Main( n - 1 )
+            addi s1, a0, 0           # Addition Immediate: Upon completion, s1 stores the result of the function call
 
-            /* Fibonacci( n - 2 ) */
-            addi s0, s0, -1          # 
-            jal Fib_Main             # 
-            add a0, s1, a0           # Addition:
-            j       Fib_End          # Jump to branch function "Fib_End" upon recursive loop completion
+            /* fibonacci( n - 2 ) */
+            addi s0, s0, -1          # Addition Immediate: Defines fibonacci argument s0 = n - 2
+            addi a0, s0, 0           # Addition Immediate: Changes set argument a0 = s0
+            jal Fib_Main             # Jump & Link: Calls the function Fib_Main( n - 2 )
+            
+            /* Find Sum of fibonacci */
+            add a0, s1, a0           # Addition: TOTAL VAL = fibonacci ( n - 1 ) + fibonacci ( n - 2 )
+            j       Fib_End          # 'j' jumps after completion to branch function 'Fib_End', skipping Base_OP
 
         Base_OP:
             addi a0, a0, 0           # Addition Immediate: Returns 'n' value (0 or 1) from IF statement
 
         Fib_End:
-            lw ra, 16(sp)            # Load Word: 
-            lw s0, 12(sp)            # Load Word:
-            lw s1, 8(sp)             # Load Word:
-            addi sp, sp, 20          # Addition Immediate: Stack is deallocated from program function call
-            jr ra                    # Return directly to the caller
+            lw ra, 16(sp)            # Load Word: Responsible for restoring the return address
+            lw s0, 12(sp)            # Load Word: Responsible for restoring argument(s) s0
+            lw s1, 8(sp)             # Load Word: Responsible for restoring results s1
+            addi sp, sp, 20          # Addition Immediate: Stack is deallocated from program function space
+            jr ra                    # Function returns directly to the caller
 
     // QUESTION #6:
 
@@ -224,9 +223,23 @@
         j       Sum_Main             # 'j' jumps  
 
         Sum_Main:
-        addi sp, sp, -24             # t0 = n
-        sw a0, 20(sp)                # t1 = result = 0
-        sw ra, 16(sp)
-        sw a1, 
-        sw a2, 
-        sw t1, 
+            addi sp, sp, -24         # Addition Immediate:
+            sw a0, 20(sp)            # t1 = result = 0
+            sw ra, 16(sp)            # 
+            sw a1, 8(sp)             #
+            sw a2, 4(sp)             #
+            sw t1, 0(sp)             # Temp Storage Usage for While Loop
+
+        Sum_Num:
+            addi t2, t2, 1           # Addition Immediate: Assigned temp t2 = 1
+        
+        While_Sum:
+
+            add a0, a0, t1
+            addi
+            j 
+
+        Swap_Sum:
+
+
+        Sum_End:
