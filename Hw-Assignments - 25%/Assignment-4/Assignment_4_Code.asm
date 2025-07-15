@@ -235,8 +235,8 @@
         
         While_Sum:
             blt t1, t2, Sum_End      # Finding if n < 1 then jumps to Sum_End
-            add a0, a0, t1           # Addition
-            addi t1, t1, -1          # Addition Immediate                   
+            add a0, a0, t1           # Addition: Add current value of n to result (a0 += n)
+            addi t1, t1, -1          # Decrement: t1-- to reduce n by 1                  
             j       While_Sum        # 'j' jumps after completion, back to top of 'While_Sum'
 
         Sum_Swap:
@@ -251,11 +251,13 @@
             jal a4, Sum_Num          # Jump & Link
             add s2, a4, x0           # Addition
 
-            lw t1, 0(sp)             # Load Word
-            lw a2, 4(sp)             # Load Word
-            lw a1, 8(sp)             # Load Word
-            lw ra, 16(sp)            # Load Word
-            lw a0, 20(sp)            # Load Word
-            addi sp, sp, 24          # Addition Immediate
+            lw t1, 0(sp)             # Load Word: Restore original n
+            lw a2, 4(sp)             # Load Word: Restore y value (pointer)
+            lw a1, 8(sp)             # Load Word: Restore x value (pointer)
+            lw ra, 16(sp)            # Load Word: Restore return address
+            lw a0, 20(sp)            # Load Word: Restore original result or output value
+            addi sp, sp, 24          # Addition Immediate: Deallocate stack space
             jr ra                    # Function returns directly to the caller
+        
         Sum_End:
+                                     # Loop exit point, no operation here yet
