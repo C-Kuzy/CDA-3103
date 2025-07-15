@@ -81,7 +81,7 @@
 
     // QUESTION #3:        Integer Variables: a, b, c, d, e, f      ||      Registers: t0, t1, t2, t3, t4, t5
 
-                                                                                /* PSUEDOCODE INSTRUCTIONS */
+                                                                                /* PSEUDOCODE INSTRUCTIONS */
                     """     if (( a > b ) && ( c > d )) {               IF A is greater than B and C is greater than D    
                                 e = e / 4;                              then, compute e = (e / 4)
                                 f = f * 4;                              then, compute f = (f * 4)
@@ -95,36 +95,36 @@
         /* TEST "if (( a > b ) && ( c > d ))" with Chk_A_Grtr_B: && Chk_C_Grtr_D: && Then_OP */
 
     Main_OP:
-        j       Chk_A_Grtr_B               # Main Operation jumps directly to check the if statement
+        j       Chk_A_Grtr_B         # Main Operation jumps directly to check the if statement
 
         Chk_A_Grtr_B:
-            blt t1, t0, Chk_C_Grtr_D       # Branch if less than Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
-            j       Else_OP                # 'j' moves directly to else block if 'a' is not greater than 'b'
+            blt t1, t0, Chk_C_Grtr_D # Branch if less than Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
+            j       Else_OP          # 'j' moves directly to else block if 'a' is not greater than 'b'
 
         Chk_C_Grtr_D:
-            blt t3, t2, Then_OP            # Branch if less than Checks the following """if (t3 < t2 == t2 > t3) move to Then_OP"""
-            j       Else_OP                # 'j' moves directly to else block if 'c' is not greater than 'd'
+            blt t3, t2, Then_OP      # Branch if less than Checks the following """if (t3 < t2 == t2 > t3) move to Then_OP"""
+            j       Else_OP          # 'j' moves directly to else block if 'c' is not greater than 'd'
 
         Then_OP:
-            srai t4, t4, 2                 # Shift right arithmetic immediate by power of 2^n so 2^2 = 4, then divide by 4 | e = e / 4 |
-            slli t5, t5, 2                 # Shift left logical immediate by power of 2^n so 2^2 = 4, then multiply by 4 | f = f * 4 | 
-            j       End                    # 'j' moves after completion, jump to End function
+            srai t4, t4, 2           # Shift right arithmetic immediate by power of 2^n so 2^2 = 4, then divide by 4 | e = e / 4 |
+            slli t5, t5, 2           # Shift left logical immediate by power of 2^n so 2^2 = 4, then multiply by 4 | f = f * 4 | 
+            j       End              # 'j' moves after completion, jump to End function
 
         /* TEST "else" with Else_OP */
 
         Else_OP:
-            sub t6, t0, t1                 # Subtract: Solving for variable 'e' ( a - b ) = result stored t6
-            sub s0, t2, t3                 # Subtract: Solving for variable 'e' ( c - d ) = result stored s0
-            add t4, t6, s0                 # Add: Solving for variable 'e' ( t6 + s0 ) = result stored t4
+            sub t6, t0, t1           # Subtract: Solving for variable 'e' ( a - b ) = result stored t6
+            sub s0, t2, t3           # Subtract: Solving for variable 'e' ( c - d ) = result stored s0
+            add t4, t6, s0           # Add: Solving for variable 'e' ( t6 + s0 ) = result stored t4
 
-            add t6, t0, t1                 # Add: Solving for variable 'f' ( a + b ) = result stored t6
-            add s1, t2, t3                 # Add: Solving for variable 'f' ( c + d ) = result stored s1
-            sub t5, t6, s1                 # Subtract: Solving for variable 'f' ( t6 + s1 ) = result stored t5
+            add t6, t0, t1           # Add: Solving for variable 'f' ( a + b ) = result stored t6
+            add s1, t2, t3           # Add: Solving for variable 'f' ( c + d ) = result stored s1
+            sub t5, t6, s1           # Subtract: Solving for variable 'f' ( t6 + s1 ) = result stored t5
             
-            j       End                    # After completion, jump to End function
+            j       End              # After completion, jump to End function
         
         End:
-            jr ra                          # Acts as a termination statement to end the RISC-V program
+            jr ra                    # Acts as a termination statement to end the RISC-V program
 
     // QUESTION #4:
 
@@ -132,29 +132,23 @@
         j       Rev_Char             # Jumps straight to Rev_Char function
 
         Rev_Char:
-            addi t0, zero, t0        # Allocate stack space for 4 registers
-            addi t1, a1, -1          # Save return address
+            addi a0, a2, 0           # a0 = Original Base Pointer stored
+            addi t0, a2, 0           # t0 = Base Case == *Start Pointer*
+            addi t1, a1, -1          # Addition: t1 = (char_length) - 1
+            add  t1, a0, t1
         
         Rev_Loop:
             bge  t0, t1, Rev_Comp    # If start >= end, we're done
-
-            lbu  s2, 0(s0)           # s2 = *start
-            lbu  t1, 0(s1)           # t1 = *end
-            sb   t1, 0(s0)           # *start = *end
-            sb   s2, 0(s1)           # *end = original *start
-
-            addi s0, s0, 1           # Move start forward
-            addi s1, s1, -1          # Move end backward
+            lbu  t3, 0(t0)           # t3 = *t0 which prompts 
+            lbu  t4, 0(t1)           # t1 = *end
+            sb   t1, 0(t0)           # *start = *end
+            sb   s2, 0(t1)           # *end = original *start
+            addi t0, t0, 1           # t0 -> increment t0++
+            addi t1, s1, -1          # t1 -> decrement t1--
             j    Rev_Loop            # Repeat until pointers meet
 
         Rev_Done:
-            mv   a0, a0              # Return base address in a0
-
-            lw   ra, 12(sp)          # Restore return address
-            lw   s0, 8(sp)           # Restore saved registers
-            lw   s1, 4(sp)
-            lw   s2, 0(sp)
-            addi sp, sp, 16          # Deallocate stack space
+            addi a2, a0, 0           # Returns the base address within register a0
             jr ra                    # Return to caller
 
     // QUESTION #5:
@@ -195,7 +189,7 @@
                 j       Fib_End      # Jump to branch function "Fib_End" upon recursive loop completion
 
         Base_OP:
-            mv a0, a0                # Returns 'n' value (0 or 1) from if statement
+            addi a0, a0, 0           # Returns 'n' value (0 or 1) from if statement
 
         Fib_End:
             lw ra, 16(sp)            #
@@ -229,4 +223,40 @@
                                 return sum_x + sum_y;
                             }
                     """
-    
+    SUM_NUMBER:
+      addi t0, a0, 0          # t0 = n
+      addi t1, x0, 0          # t1 = result = 0
+    WHILE:
+      blt  t0, 1, END_WHILE   # while(n >= 1)
+      add  t1, t1, t0         # result += n
+      addi t0, t0, -1         # n--
+      j    WHILE              # jump back to loop
+    END_WHILE:
+      addi a0, t1, 0          # return result
+      jr   ra                 # jump back to caller
+
+    SWAP_SUM:
+      lw   t0, 0(a0)          # t0 = *x
+      lw   t1, 0(a1)          # t1 = *y
+
+      sw   t0, 0(a1)          # *y = *x
+      sw   t1, 0(a0)          # *x = temp
+
+      lw   a0, 0(a0)          # a0 = *x
+      addi sp, sp, -8         # allocate space on the stack
+      sw   ra, 4(sp)          # return address
+      sw   a1, 0(sp)          # save y pointer for later
+      jal  ra, SUM_NUMBER     # call function 
+      addi t2, a0, 0          # t2 = sum_x
+      jal  ra, SUM_NUMBER     # call function
+
+      lw   a1, 0(sp)          # restore y pointer
+      lw   a0, 0(a1)          # a0 = *y
+      jal  ra, SUM_NUMBER     # call function
+      addi t3, a0, 0          # t3 = sum_y
+
+      lw   ra, 4(sp)          # restore initial return address
+      addi sp, sp, 8          # deallocate stack space
+
+      add  a0, t2, t3         # add results, return in a0
+      jr   ra                 # jump back to caller
