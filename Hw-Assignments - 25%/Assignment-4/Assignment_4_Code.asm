@@ -121,7 +121,7 @@
             add s1, t2, t3           # Add: Solving for variable 'f' ( c + d ) = result stored s1
             sub t5, t6, s1           # Subtract: Solving for variable 'f' ( t6 + s1 ) = result stored t5
             
-            j       End              # After completion, jump to End function
+            j       End              # 'j' moves after completion, jump to End function
         
         End:
             jr ra                    # Acts as a termination statement to end the RISC-V program
@@ -133,19 +133,19 @@
 
         Rev_Char:
             addi a0, a2, 0           # Addition Immediate: a0 = Original Base Pointer of the character array
-            addi t0, a2, 0           # Addition Immediate: t0 = Base Case == *Start Pointer*
-            addi t1, a1, -1          # Addition Immediate: t1 = (char_length) - 1
-            add  t1, a0, t1          # Addition
+            addi t0, a2, 0           # Addition Immediate: t0 = Base Case == Start Pointer
+            addi t1, a1, -1          # Addition Immediate: t1 = (char_length) - 1 
+            add  t1, a0, t1          # Addition: t1 = base + (char_length - 1) == End Pointer
         
         Rev_Loop:
-            bge  t0, t1, Rev_Done    # IF start >= end, 
-            lbu  t3, 0(t0)           # t3 = *t0 which prompts 
-            lbu  t4, 0(t1)           # t4 = *t1
-            sb   t1, 0(t0)           # *start = *end
-            sb   s2, 0(t1)           # *end = original *start
+            bge  t0, t1, Rev_Done    # IF start >= end, then move to 'Rev_Done'
+            lbu  t3, 0(t0)           # Load Byte Unsigned: t3 = *t0 which prompts 
+            lbu  t4, 0(t1)           # Load Byte Unsigned: t4 = *t1
+            sb   t4, 0(t0)           # Store Byte: *start = *end
+            sb   t3, 0(t1)           # Store Byte: *end = original *start
             addi t0, t0, 1           # Addition Immediate: t0 -> increment t0++
             addi t1, s1, -1          # Addition Immediate: t1 -> decrement t1--
-            j       Rev_Loop         # 'j' jumps back to the top of the 'Rev_Loop'
+            j       Rev_Loop         # 'j' moves after completion, back to run through 'Rev_Loop'
 
         Rev_Done:
             addi a0, a0, 0           # Returns the base address within register a0
@@ -172,7 +172,7 @@
             
             addi t0, zero, 1         # 
             blt t0, a0, recursive    # 
-            j       Base_OP          # IF value is less than or equal to one, jump to branch "Base_OP"
+            j       Base_OP          # 'j' jumps to Base_OP IF value is less than or equal to one
 
         recursive:
             /* Fibonacci( n - 1 ) */
@@ -192,9 +192,9 @@
             addi a0, a0, 0           # Returns 'n' value (0 or 1) from if statement
 
         Fib_End:
-            lw ra, 16(sp)            #
-            lw s0, 12(sp)            # 
-            lw s1, 8(sp)             #
+            lw ra, 16(sp)            # Load Word: 
+            lw s0, 12(sp)            # Load Word:
+            lw s1, 8(sp)             # Load Word:
             addi sp, sp, 20          # Stack is deallocated from program function call
             jr ra                    # Return directly to the caller
 
@@ -223,40 +223,42 @@
                                 return sum_x + sum_y;
                             }
                     """
-    SUM_NUMBER:
-      addi t0, a0, 0          # t0 = n
-      addi t1, x0, 0          # t1 = result = 0
-    WHILE:
-      blt  t0, 1, END_WHILE   # while(n >= 1)
-      add  t1, t1, t0         # result += n
-      addi t0, t0, -1         # n--
-      j    WHILE              # jump back to loop
-    END_WHILE:
-      addi a0, t1, 0          # return result
-      jr   ra                 # jump back to caller
+    Main_OP:
+    
+        SUM_NUMBER:
+        addi t0, a0, 0          # t0 = n
+        addi t1, x0, 0          # t1 = result = 0
+        WHILE:
+        blt  t0, 1, END_WHILE   # while(n >= 1)
+        add  t1, t1, t0         # result += n
+        addi t0, t0, -1         # n--
+        j    WHILE              # jump back to loop
+        END_WHILE:
+        addi a0, t1, 0          # return result
+        jr   ra                 # jump back to caller
 
-    SWAP_SUM:
-      lw   t0, 0(a0)          # t0 = *x
-      lw   t1, 0(a1)          # t1 = *y
+        SWAP_SUM:
+        lw   t0, 0(a0)          # t0 = *x
+        lw   t1, 0(a1)          # t1 = *y
 
-      sw   t0, 0(a1)          # *y = *x
-      sw   t1, 0(a0)          # *x = temp
+        sw   t0, 0(a1)          # *y = *x
+        sw   t1, 0(a0)          # *x = temp
 
-      lw   a0, 0(a0)          # a0 = *x
-      addi sp, sp, -8         # allocate space on the stack
-      sw   ra, 4(sp)          # return address
-      sw   a1, 0(sp)          # save y pointer for later
-      jal  ra, SUM_NUMBER     # call function 
-      addi t2, a0, 0          # t2 = sum_x
-      jal  ra, SUM_NUMBER     # call function
+        lw   a0, 0(a0)          # a0 = *x
+        addi sp, sp, -8         # allocate space on the stack
+        sw   ra, 4(sp)          # return address
+        sw   a1, 0(sp)          # save y pointer for later
+        jal  ra, SUM_NUMBER     # call function 
+        addi t2, a0, 0          # t2 = sum_x
+        jal  ra, SUM_NUMBER     # call function
 
-      lw   a1, 0(sp)          # restore y pointer
-      lw   a0, 0(a1)          # a0 = *y
-      jal  ra, SUM_NUMBER     # call function
-      addi t3, a0, 0          # t3 = sum_y
+        lw   a1, 0(sp)          # restore y pointer
+        lw   a0, 0(a1)          # a0 = *y
+        jal  ra, SUM_NUMBER     # call function
+        addi t3, a0, 0          # t3 = sum_y
 
-      lw   ra, 4(sp)          # restore initial return address
-      addi sp, sp, 8          # deallocate stack space
+        lw   ra, 4(sp)          # restore initial return address
+        addi sp, sp, 8          # deallocate stack space
 
-      add  a0, t2, t3         # add results, return in a0
-      jr   ra                 # jump back to caller
+        add  a0, t2, t3         # add results, return in a0
+        jr   ra                 # jump back to caller
