@@ -94,7 +94,7 @@
 
         /* TEST "if (( a > b ) && ( c > d ))" with Chk_A_Grtr_B: && Chk_C_Grtr_D: && Then_OP */
     Main_OP:
-        j       Chk_A_Grtr_B         # Main Operation jumps directly to check the if statement
+        j       Chk_A_Grtr_B         # 'j' jumps straight to Chk_A_Grtr_B function
 
         Chk_A_Grtr_B:
             blt t1, t0, Chk_C_Grtr_D # Branch if less than Checks the following """if (t1 < t0 == t0 > t1) move to Chk_C_Grtr_D"""
@@ -125,7 +125,7 @@
     // QUESTION #4:
 
     Main_OP:
-        j       Rev_Char             # Jumps straight to Rev_Char function
+        j       Rev_Char             # 'j' jumps straight to Rev_Char function
 
         Rev_Char:
             addi a0, a2, 0           # Addition Immediate: a0 = Original Base Pointer of the character array
@@ -220,26 +220,42 @@
                             }
                     """
     Main_OP:
-        j       Sum_Main             # 'j' jumps  
+        j       Sum_Main             # 'j' jumps directly to Sum_Main, executing the program
 
         Sum_Main:
-            addi sp, sp, -24         # Addition Immediate:
-            sw a0, 20(sp)            # t1 = result = 0
-            sw ra, 16(sp)            # 
-            sw a1, 8(sp)             #
-            sw a2, 4(sp)             #
-            sw t1, 0(sp)             # Temp Storage Usage for While Loop
+            addi sp, sp, -24         # Addition Immediate
+            sw a0, 20(sp)            # Store Word: a0 is our stored result
+            sw ra, 16(sp)            # Store Word: ra is our return address
+            sw a1, 8(sp)             # Store Word: a1 is our x value
+            sw a2, 4(sp)             # Store Word: a2 is our y value
+            sw t1, 0(sp)             # Store Word: t1 is used as n for the While_Sum Loop
 
         Sum_Num:
             addi t2, t2, 1           # Addition Immediate: Assigned temp t2 = 1
         
         While_Sum:
+            blt t1, t2, Sum_End      # Finding if n < 1 then jumps to Sum_End
+            add a0, a0, t1           # Addition
+            addi t1, t1, -1          # Addition Immediate                   
+            j       While_Sum        # 'j' jumps after completion, back to top of 'While_Sum'
 
-            add a0, a0, t1
-            addi
-            j 
+        Sum_Swap:
+            add t3, t3, x0           # Addition
+            addi a3, sp, a2          # Addition Immediate
+            lw a4, 0(a3)             # Load Word
+            addi a5, sp, a1          # Addition Immediate
+            lw a6, 0(a5)             # Load Word
+            add a4, a6, x0           # Addition
+            jal a6, Sum_Num          # Jump & Link
+            add s1, a6, x0           # Addition
+            jal a4, Sum_Num          # Jump & Link
+            add s2, a4, x0           # Addition
 
-        Swap_Sum:
-
-
+            lw t1, 0(sp)             # Load Word
+            lw a2, 4(sp)             # Load Word
+            lw a1, 8(sp)             # Load Word
+            lw ra, 16(sp)            # Load Word
+            lw a0, 20(sp)            # Load Word
+            addi sp, sp, 24          # Addition Immediate
+            jr ra                    # Function returns directly to the caller
         Sum_End:
