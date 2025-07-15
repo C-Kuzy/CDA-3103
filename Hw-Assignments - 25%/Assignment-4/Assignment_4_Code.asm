@@ -132,20 +132,20 @@
         j       Rev_Char             # Jumps straight to Rev_Char function
 
         Rev_Char:
-            addi a0, a2, 0           # a0 = Original Base Pointer stored
-            addi t0, a2, 0           # t0 = Base Case == *Start Pointer*
-            addi t1, a1, -1          # Addition: t1 = (char_length) - 1
-            add  t1, a0, t1
+            addi a0, a2, 0           # Addition Immediate: a0 = Original Base Pointer stored
+            addi t0, a2, 0           # Addition Immediate: t0 = Base Case == *Start Pointer*
+            addi t1, a1, -1          # Addition Immediate: t1 = (char_length) - 1
+            add  t1, a0, t1          # Addition
         
         Rev_Loop:
-            bge  t0, t1, Rev_Comp    # If start >= end, we're done
+            bge  t0, t1, Rev_Done    # IF start >= end, 
             lbu  t3, 0(t0)           # t3 = *t0 which prompts 
-            lbu  t4, 0(t1)           # t1 = *end
+            lbu  t4, 0(t1)           # t4 = *t1
             sb   t1, 0(t0)           # *start = *end
             sb   s2, 0(t1)           # *end = original *start
-            addi t0, t0, 1           # t0 -> increment t0++
-            addi t1, s1, -1          # t1 -> decrement t1--
-            j    Rev_Loop            # Repeat until pointers meet
+            addi t0, t0, 1           # Addition Immediate: t0 -> increment t0++
+            addi t1, s1, -1          # Addition Immediate: t1 -> decrement t1--
+            j       Rev_Loop         # 'j' jumps back to the top of the 'Rev_Loop'
 
         Rev_Done:
             addi a2, a0, 0           # Returns the base address within register a0
@@ -161,8 +161,8 @@
                                 }
                     """
         
-    Fib_OP:
-        j       Fib_Main             #
+    Main_OP:
+        j       Fib_Main             # Jumps directly to main 
 
         Fib_Main:
             addi sp, sp, -20         # Stack allocation for ra, s0, and s1
@@ -175,13 +175,13 @@
             j       Base_OP          # IF value is less than or equal to one, jump to branch "Base_OP"
 
         recursive:
-            /* Fib_N1 */
+            /* Fibonacci( n - 1 ) */
                 addi s0, a0, -1      # Stores s0 = n - 1
                 mv a0, s0            # 
                 jal Fib_Main         # 
                 mv s1, a0            # 
 
-            /* Fib_N2 */
+            /* Fibonacci( n - 2 ) */
                 addi s0, s0, -1      # 
                 mv a0, s0            # 
                 jal Fib_Main         # 
