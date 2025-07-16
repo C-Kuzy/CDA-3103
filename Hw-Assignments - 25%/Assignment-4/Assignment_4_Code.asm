@@ -240,16 +240,16 @@
             j       While_Sum        # 'j' jumps after completion, back to top of 'While_Sum'
 
         Sum_Swap:
-            add t3, t3, x0           # Addition
+            add t3, t3, 0            # Addition: 
             addi a3, sp, a2          # Addition Immediate
             lw a4, 0(a3)             # Load Word
             addi a5, sp, a1          # Addition Immediate
             lw a6, 0(a5)             # Load Word
-            add a4, a6, x0           # Addition
+            add a4, a6, 0            # Addition
             jal a6, Sum_Num          # Jump & Link
-            add s1, a6, x0           # Addition
+            add s1, a6, 0            # Addition
             jal a4, Sum_Num          # Jump & Link
-            add s2, a4, x0           # Addition
+            add s2, a4, 0            # Addition
 
             lw t1, 0(sp)             # Load Word: Restore original n
             lw a2, 4(sp)             # Load Word: Restore y value (pointer)
