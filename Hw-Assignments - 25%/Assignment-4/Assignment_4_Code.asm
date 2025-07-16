@@ -240,16 +240,22 @@
             j       While_Sum        # 'j' jumps after completion, back to top of 'While_Sum'
 
         Sum_Swap:
-            add t3, t3, 0            # Addition: 
-            addi a3, sp, a2          # Addition Immediate
-            lw a4, 0(a3)             # Load Word
-            addi a5, sp, a1          # Addition Immediate
-            lw a6, 0(a5)             # Load Word
-            add a4, a6, 0            # Addition
-            jal a6, Sum_Num          # Jump & Link
-            add s1, a6, 0            # Addition
-            jal a4, Sum_Num          # Jump & Link
-            add s2, a4, 0            # Addition
+            add t3, t3, x0           # Addition: Zero out t3 if needed (t3 = 0)
+
+            addi a3, sp, a2          # Addition Immediate: a3 = sp + offset to stored y value
+            lw a4, 0(a3)             # Load Word: a4 = a2 (loaded value of y)
+
+            addi a5, sp, a1          # Addition Immediate: a5 = sp + offset to stored x value
+            lw a6, 0(a5)             # Load Word: a6 = a1 (loaded value of x)
+
+            add a4, a6, x0           # Addition: Swap operation part 1 — temp = x (a4 = a6)
+
+            jal a6, Sum_Num          # Jump & Link: Calls for a6 and jumps to Sum_Num
+            add s1, a6, x0           # Addition: Save result from first sum_number call to s1
+
+            jal a4, Sum_Num          # Jump & Link: Calls for a4 and jumps to Sum_Num
+            add s2, a4, x0           # Addition: Save result from second sum_number call to s2
+
 
             lw t1, 0(sp)             # Load Word: Restore original n
             lw a2, 4(sp)             # Load Word: Restore y value (pointer)
